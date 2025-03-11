@@ -1,0 +1,45 @@
+services:
+  # Use MongoDB directly from the official image
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    # Lower resource usage for development
+    command: mongod --wiredTigerCacheSizeGB 0.25
+
+  # Backend service using pre-built image
+  backend:
+    image: opinion-backend:dev
+    ports:
+      - "5001:5000"
+    volumes:
+      - ./src:/app/src
+      # Use a named volume for node_modules
+      - backend_node_modules:/app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=5000
+      - MONGODB_URI=mongodb://mongodb:27017/opinion-trading
+    depends_on:
+      - mongodb
+
+  # Frontend service using pre-built image
+  frontend:
+    image: opinion-frontend:dev
+    ports:
+      - "3002:3000"
+    volumes:
+      - ./frontend:/app
+      # Use a named volume for node_modules
+      - frontend_node_modules:/app/node_modules
+    environment:
+      - REACT_APP_API_URL=http://localhost:5001
+    depends_on:
+      - backend
+
+volumes:
+  mongodb_data:
+  backend_node_modules:
+  frontend_node_modules:

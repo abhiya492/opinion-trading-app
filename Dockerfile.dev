@@ -1,0 +1,42 @@
+FROM node:18-alpine
+
+# Install essential tools (dos2unix not needed with proper .dockerignore)
+RUN apk add --no-cache python3 make g++
+
+WORKDIR /app
+
+# Set npm configuration for better reliability
+RUN npm config set fetch-retry-maxtimeout 600000 \
+    && npm config set fetch-retry-mintimeout 10000 \
+    && npm config set fetch-retries 5 \
+    && npm config set registry https://registry.npmjs.org/
+
+# Copy package files (more specific to reduce rebuild)
+COPY package.json package-lock.json* ./
+
+# Install dependencies with clean cache to reduce image size
+# Using a retry mechanism for better reliability
+RUN for i in 1 2 3; do \
+        npm install --no-audit --no-fund && \
+        npm cache clean --force && \
+        break || \
+        if [ $i -lt 3 ]; then \
+            sleep 10; \
+            echo "Retrying npm install (attempt $i of 3)..."; \
+        else \
+            exit 1; \
+        fi \
+    done
+
+# Don't copy all files, let volume mounting handle source files
+# This speeds up the build process significantly
+# COPY . .
+
+# Set environment variables
+ENV NODE_ENV=development
+ENV PORT=5000
+
+EXPOSE 5000
+
+# Use nodemon for development
+CMD ["npm", "run", "dev"]

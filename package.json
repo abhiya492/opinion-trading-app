@@ -1,0 +1,38 @@
+{
+  "name": "opinion-trading-app",
+  "version": "1.0.0",
+  "description": "Backend for Opinion Trading Application",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "start:dev": "nodemon src/server.js",
+    "frontend": "cd frontend && npm start",
+    "kill-port": "npx kill-port 3000 && echo Port 3000 freed",
+    "start:clean": "npm run kill-port || true && node src/server.js",
+    "dev": "concurrently \"npm run start:dev\" \"npm run frontend\"",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.1.1",
+    "socket.io": "^4.7.4",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "winston": "^3.11.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.1",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "axios": "^1.6.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4"
+  }
+}

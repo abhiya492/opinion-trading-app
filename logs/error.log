@@ -1,0 +1,3 @@
+{"level":"error","message":"Error: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017","service":"opinion-trading-service","timestamp":"2025-03-11 15:58:05"}
+{"level":"error","message":"Error: querySrv ENOTFOUND _mongodb._tcp.cluster0.mongodb.net","service":"opinion-trading-service","timestamp":"2025-03-11 16:00:49"}
+{"level":"error","message":"Error: querySrv ENOTFOUND _mongodb._tcp.cluster0.mongodb.net","service":"opinion-trading-service","timestamp":"2025-03-11 16:00:50"}
