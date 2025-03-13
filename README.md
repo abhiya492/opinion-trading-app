@@ -13,7 +13,7 @@ A real-time platform where users can trade on their opinions about upcoming even
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/opinion-trading-app.git
+git clone https://github.com/abhiya492/opinion-trading-app.git
 cd opinion-trading-app
 ```
 
